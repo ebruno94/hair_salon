@@ -20,6 +20,7 @@ namespace HairSalon.Tests
         }
 
         // Test Passes, nothing in database yet.
+        // Fails after running more tests.
         [TestMethod]
         public void GetAll_DatabaseEmptyAtFirst_0()
         {
