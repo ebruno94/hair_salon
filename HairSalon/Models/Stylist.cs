@@ -33,6 +33,11 @@ namespace HairSalon.Models
             _id = id;
         }
 
+        public void AddClient(string name)
+        {
+            
+        }
+
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
