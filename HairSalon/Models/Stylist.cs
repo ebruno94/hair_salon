@@ -8,14 +8,13 @@ namespace HairSalon.Models
     public class Stylist
     {
         private string _name;
-        private string _client;
         private int _id;
-        private List<string> _clients;
+        private List<Client> _clients;
 
         public Stylist(string name)
         {
             _name = name;
-            _clients = new List<string>();
+            _clients = new List<Client>();
         }
 
         public string GetName()
@@ -33,9 +32,31 @@ namespace HairSalon.Models
             _id = id;
         }
 
-        public void AddClient(string name)
+        public List<Client> GetAllClients()
         {
-            
+            List<Client> clients = new List<Client>();
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM clients;";
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while (rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name = rdr.GetString(1);
+                int stylistId = rdr.GetInt32(2);
+                Client tempClient = new Client(name, stylistId);
+                tempClient.SetId(id);
+                clients.Add(tempClient);
+            }
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return clients;
         }
 
         public void Save()
