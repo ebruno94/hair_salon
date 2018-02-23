@@ -21,6 +21,7 @@ namespace HairSalon.Tests
         }
 
         // First test: Save fails. No method yet.
+        // Second test: Pass.
         [TestMethod]
         public void Save_SavesToDatabase()
         {
@@ -29,6 +30,18 @@ namespace HairSalon.Tests
             Client newClient = new Client("Lenon", 1);
             newClient.Save();
             Assert.AreEqual(1, newStylist.GetAllClients().Count);
+        }
+
+        [TestMethod]
+        public void Save_SavesToCorrectStylist()
+        {
+            Stylist newStylist = new Stylist("Lita");
+            newStylist.Save();
+            Client newClient = new Client("Lyra", 1);
+            newClient.Save();
+            Client newClient2 = new Client("Lola", 1);
+            newClient.Save();
+            Assert.AreEqual(2, newStylist.GetAllClients().Count);
         }
     }
 }
