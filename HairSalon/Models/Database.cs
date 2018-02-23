@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
-namespace restaurantProject.Models
+namespace HairSalon.Models
 {
     public class DB
     {
