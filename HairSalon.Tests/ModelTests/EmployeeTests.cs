@@ -16,7 +16,7 @@ namespace HairSalon.Tests
 
         public StylistTest()
         {
-            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=ernest_bruno_tests;";
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=ernest_bruno_test;";
         }
 
         // Test Passes, nothing in database yet.
@@ -24,6 +24,16 @@ namespace HairSalon.Tests
         public void GetAll_DatabaseEmptyAtFirst_0()
         {
             Assert.AreEqual(0, Stylist.GetAllStylists().Count);
+        }
+
+        // Test Save
+        [TestMethod]
+        public void Save_SavesToDatabase_List()
+        {
+            Stylist testStylist = new Stylist("Jamie");
+            testStylist.Save();
+            List<Stylist> stylists = Stylist.GetAllStylists();
+            CollectionAssert.AreEqual(new List<Stylist>{testStylist}, stylists);
         }
     }
 }
