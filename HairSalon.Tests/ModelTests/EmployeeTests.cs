@@ -36,5 +36,15 @@ namespace HairSalon.Tests
             List<Stylist> stylists = Stylist.GetAllStylists();
             CollectionAssert.AreEqual(new List<Stylist>{testStylist}, stylists);
         }
+
+        // First test: Delete should fail (No method written yet);
+        [TestMethod]
+        public void Delete_DeleteStylist()
+        {
+            Stylist testStylist = new Stylist("James");
+            testStylist.Save();
+            testStylist.Delete();
+            Assert.AreEqual(0, Stylist.GetAllStylists().Count);
+        }
     }
 }
