@@ -55,7 +55,30 @@ namespace HairSalon.Models
 
         public static Stylist Find(int id)
         {
-            
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM stylists WHERE id=@id;";
+            cmd.Parameters.Add(new MySqlParameter("@id", id));
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            string tempName = "";
+            int tempId = 0;
+
+            while (rdr.Read())
+            {
+                tempId = rdr.GetInt32(0);
+                tempName = rdr.GetString(1);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            Stylist thisStylist = new Stylist(tempName);
+            thisStylist.SetId(tempId);
+            return thisStylist;
         }
 
         public static List<Stylist> GetAllStylists()
