@@ -5,15 +5,14 @@ using MySql.Data.MySqlClient;
 
 namespace HairSalon.Models
 {
-    public class Employee
+    public class Stylist
     {
         private string _name;
         private string _client;
         private int _id;
         private List<string> _clients;
-        private static List<Stylists> _stylists = new List<Stylists>();
 
-        public Employee(string name)
+        public Stylist(string name)
         {
             _name = name;
             _clients = new List<string>();
@@ -39,14 +38,21 @@ namespace HairSalon.Models
 
         }
 
-        public static List<Stylists> GetAllStylists()
+        public static List<Stylist> GetAllStylists()
+        {
+            List<Stylist> myStylists = new List<Stylist>;
+
+            return myStylists;
+        }
+
+        public static void DeleteAll()
         {
 
         }
 
         public void Delete()
         {
-            
+
         }
 
     }
