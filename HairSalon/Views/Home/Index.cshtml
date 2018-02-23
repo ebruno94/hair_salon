@@ -1,0 +1,29 @@
+@{
+    Layout = "_Layout";
+}
+
+<div class="container" id="indexContainer">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>STYLISTS</h1>
+            <hr>
+            <ul>
+                @foreach (var stylist in Model)
+                {
+                    <a href="/Stylist/Info/@stylist.GetId()"><li>@stylist.GetName()</li></a>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/Stylist/Form"><button type="button" class="btn"> Hire A New Stylist <button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="/Stylist/Form"><button type="button" class="btn"> Go Bankrupt <button></a>
+        </div>
+    </div>
+</div>
