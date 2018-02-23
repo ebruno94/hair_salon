@@ -1,0 +1,24 @@
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>HIRE A NEW STYLIST</h1>
+      <hr>
+      <form action="/Stylist/Create" method="post">
+        <div class="form-group">
+          <label for="stylistName">Stylist Name: </label>
+          <input type="text" name="stylistName" id="stylistName">
+        </div>
+        <div class="form-group">
+          <label for="stylistNumber">Phone Number: </label>
+          <input type="text" name="stylistNumber" id="stylistNumber">
+        </div>
+        <hr>
+        <button type="submit" class="btn">HIRE!</button>
+      </form>
+    </div>
+  </div>
+</div>

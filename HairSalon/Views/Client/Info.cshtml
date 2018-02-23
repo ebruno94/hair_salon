@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="container" id="clientContainer">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>@Model.GetName()</h1>
+      <hr>
+      <h2>Phone Number: @Model.GetPhoneNumber()</h2>
+      <br>
+    </div>
+  </div>
+  <a href="/Client/Delete/@Model.GetId()"><button type="button" class="btn"> Remove </button></a>
+  <a href="/Stylist/Info/@Model.GetStylistId()"><button type="button" class="btn"> Back to Stylist </button></a>
+
+</div>
