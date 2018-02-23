@@ -31,7 +31,7 @@ namespace HairSalon.Tests
         [TestMethod]
         public void Save_SavesToDatabase_List()
         {
-            Stylist testStylist = new Stylist("Jamie");
+            Stylist testStylist = new Stylist("Jamie", "(111) 222-3333");
             testStylist.Save();
             List<Stylist> stylists = Stylist.GetAllStylists();
             CollectionAssert.AreEqual(new List<Stylist>{testStylist}, stylists);
@@ -42,7 +42,7 @@ namespace HairSalon.Tests
         [TestMethod]
         public void Delete_DeleteStylist()
         {
-            Stylist testStylist = new Stylist("James");
+            Stylist testStylist = new Stylist("James", "(111) 222-3333");
             testStylist.Save();
             testStylist.Delete();
             Assert.AreEqual(0, Stylist.GetAllStylists().Count);
@@ -52,7 +52,7 @@ namespace HairSalon.Tests
         [TestMethod]
         public void Find_FindStylist_True()
         {
-            Stylist testStylist = new Stylist("Jiles");
+            Stylist testStylist = new Stylist("Jiles", "(111) 222-3333");
             testStylist.Save();
 
             Assert.AreEqual(testStylist, Stylist.Find(testStylist.GetId()));

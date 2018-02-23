@@ -25,9 +25,9 @@ namespace HairSalon.Tests
         [TestMethod]
         public void Save_SavesToDatabase()
         {
-            Stylist newStylist = new Stylist("Lily");
+            Stylist newStylist = new Stylist("Lily", "(111) 222-3333");
             newStylist.Save();
-            Client newClient = new Client("Lenon", 1);
+            Client newClient = new Client("Lenon", "(444) 555-6666", 1);
             newClient.Save();
             Assert.AreEqual(1, newStylist.GetAllClients().Count);
         }
@@ -35,11 +35,11 @@ namespace HairSalon.Tests
         [TestMethod]
         public void Save_SavesToCorrectStylist()
         {
-            Stylist newStylist = new Stylist("Lita");
+            Stylist newStylist = new Stylist("Lita", "(555) 333-444");
             newStylist.Save();
-            Client newClient = new Client("Lyra", 1);
+            Client newClient = new Client("Lyra", "(111) 222-3333", 1);
             newClient.Save();
-            Client newClient2 = new Client("Lola", 1);
+            Client newClient2 = new Client("Lola", "(444) 555-6666", 1);
             newClient.Save();
             Assert.AreEqual(2, newStylist.GetAllClients().Count);
         }
@@ -47,7 +47,7 @@ namespace HairSalon.Tests
         [TestMethod]
         public void Find_FindCorrectClient()
         {
-            Client newClient = new Client("Bob", 1);
+            Client newClient = new Client("Bob", "(111) 222-3333", 1);
             newClient.Save();
             Assert.AreEqual(newClient, Client.Find(newClient.GetId()));
         }
