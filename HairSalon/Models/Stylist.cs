@@ -46,7 +46,7 @@ namespace HairSalon.Models
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
 
-            conn.Close()
+            conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
@@ -72,7 +72,7 @@ namespace HairSalon.Models
                 myStylists.Add(newStylist);
             }
 
-            conn.Close()
+            conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
