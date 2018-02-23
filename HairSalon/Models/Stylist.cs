@@ -35,13 +35,28 @@ namespace HairSalon.Models
 
         public void Save()
         {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO stylists(name) VALUES (@name);";
 
+            MySqlParameter name = new MySqlParameter("@name", _name);
+            cmd.Parameters.Add(name);
+
+            cmd.ExecuteNonQuery();
+            _id = (int) cmd.LastInsertedId;
+
+            conn.Close()
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
 
         public static List<Stylist> GetAllStylists()
         {
             List<Stylist> myStylists = new List<Stylist>();
-            
+
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
@@ -55,6 +70,12 @@ namespace HairSalon.Models
                 Stylist newStylist = new Stylist(name);
                 newStylist.SetId(id);
                 myStylists.Add(newStylist);
+            }
+
+            conn.Close()
+            if (conn != null)
+            {
+                conn.Dispose();
             }
 
             return myStylists;
