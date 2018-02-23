@@ -29,9 +29,10 @@
                       <input type="text" name="clientNumber">
                     </div>
                   </div>
-                  <input type="hidden" name="restaurantId" value="@Model.GetId()">
+                  <input type="hidden" name="stylistId" value="@Model.GetId()">
                   <button type="submit" class="btn">Submit</button>
                 </form>
+                <hr>
               </div>
             </div>
           </div>
@@ -46,7 +47,7 @@
                   <a href="/Client/Info/@client.GetId()"><h4>@client.GetName()</h4></a>
                 </div>
                 <div class="col-md-5">
-                  <a href="/Client/Delete/@client.GetId()"><button type="button" class="btn"> Remove </button></a>
+                  <a href="/Client/Delete/@client.GetStylistId()"><button type="button" class="btn"> Remove </button></a>
                 </div>
               </div>
             }
@@ -64,9 +65,10 @@
                   <input type="text" name="clientNumber">
                 </div>
               </div>
-              <input type="hidden" name="restaurantId" value="@Model.GetId()">
+              <input type="hidden" name="stylistId" value="@Model.GetId()">
               <button type="submit" class="btn">Submit</button>
             </form>
+            <hr>
       }
     </div>
   </div>

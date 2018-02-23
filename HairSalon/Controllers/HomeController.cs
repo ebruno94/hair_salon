@@ -13,5 +13,14 @@ namespace HairSalon.Controllers
         {
             return View(Stylist.GetAllStylists());
         }
+
+        [HttpGet("/Stylist/Delete_All")]
+        public ActionResult DeleteAll()
+        {
+            Stylist.DeleteAll();
+            Client.DeleteAll();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

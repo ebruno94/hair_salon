@@ -53,7 +53,7 @@ namespace HairSalon.Models
             cmd.Parameters.Add(new MySqlParameter("@id", id));
 
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int tempId = 0;
+            int tempId =0;
             string tempName = "";
             string tempNumber = "";
             int tempStylistId = 0;
@@ -62,11 +62,13 @@ namespace HairSalon.Models
             {
                 tempId = rdr.GetInt32(0);
                 tempName = rdr.GetString(1);
-                tempNumber = rdr.GetInt32(2).ToString();
+                tempNumber = rdr.GetString(2);
                 tempStylistId = rdr.GetInt32(3);
             }
 
             Client thisClient = new Client(tempName, tempNumber, tempStylistId);
+            thisClient.SetId(tempId);
+
             conn.Close();
             if (conn != null)
             {
