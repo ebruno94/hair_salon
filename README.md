@@ -13,11 +13,15 @@ This simple website takes advantage of MySQL database to add employees / stylist
 
 1. Clone this repository from GitHub (https://github.com/ebruno94/hair_salon.git)
 
-2. Create ernest_bruno and ernest_bruno_test in MySqlDatabases.
+2. In MySQL:
+* CREATE DATABASE ernest_bruno;
+* USE ernest_bruno;
+* CREATE TABLE stylists (id serial PRIMARY KEY, name VARCHAR(255), number VARCHAR(35));
+* CREATE TABLE clients (id serial PRIMARY KEY, name VARCHAR(255), number VARCHAR(35), stylist_id INT);
 
-2. Use terminal and run >dotnet run.
+3. Use terminal and run >dotnet run.
 
-3. Open web browser into localhost:5000/
+4. Open web browser into localhost:5000/
 
 ## Known Bugs
 * No known bugs at this time.
