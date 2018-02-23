@@ -40,7 +40,22 @@ namespace HairSalon.Models
 
         public static List<Stylist> GetAllStylists()
         {
-            List<Stylist> myStylists = new List<Stylist>;
+            List<Stylist> myStylists = new List<Stylist>();
+            
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM stylists;";
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+            while (rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name = rdr.GetString(1);
+                Stylist newStylist = new Stylist(name);
+                newStylist.SetId(id);
+                myStylists.Add(newStylist);
+            }
 
             return myStylists;
         }
