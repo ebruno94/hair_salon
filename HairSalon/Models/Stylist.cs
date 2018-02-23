@@ -53,6 +53,11 @@ namespace HairSalon.Models
             }
         }
 
+        public static Stylist Find(int id)
+        {
+            
+        }
+
         public static List<Stylist> GetAllStylists()
         {
             List<Stylist> myStylists = new List<Stylist>();
