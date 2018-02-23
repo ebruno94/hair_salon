@@ -37,6 +37,11 @@ namespace HairSalon.Models
             return _stylistId();
         }
 
+        public void Save()
+        {
+            
+        }
+
         public static void DeleteAll()
         {
             MySqlConnection conn = DB.Connection();
