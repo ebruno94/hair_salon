@@ -38,6 +38,7 @@ namespace HairSalon.Tests
         }
 
         // First test: Delete should fail (No method written yet);
+        // Second test: Delete passes after updating Delete();
         [TestMethod]
         public void Delete_DeleteStylist()
         {
@@ -45,6 +46,16 @@ namespace HairSalon.Tests
             testStylist.Save();
             testStylist.Delete();
             Assert.AreEqual(0, Stylist.GetAllStylists().Count);
+        }
+
+        // Init: Find should fail (No method written);
+        [TestMethod]
+        public void Find_FindStylist_True()
+        {
+            Stylist testStylist = new Stylist("Jiles");
+            testStylist.Save();
+
+            Assert.AreEqual(testStylist, Stylist.Find(testStylist.GetId()));
         }
     }
 }
