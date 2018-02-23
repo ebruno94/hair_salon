@@ -9,11 +9,13 @@ namespace HairSalon.Models
     {
         private string _name;
         private int _id;
+        private string _phonenumber;
         private int _stylistId;
 
-        public Client(string name, int stylistId)
+        public Client(string name, string number, int stylistId)
         {
             _name = name;
+            _phonenumber = number;
             _stylistId = stylistId;
         }
 
@@ -25,6 +27,11 @@ namespace HairSalon.Models
         public int GetId()
         {
             return _id;
+        }
+
+        public string GetPhoneNumber()
+        {
+            return _phonenumber;
         }
 
         public void SetId(int id)
@@ -48,16 +55,18 @@ namespace HairSalon.Models
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
             int tempId = 0;
             string tempName = "";
+            string tempNumber = "";
             int tempStylistId = 0;
 
             while (rdr.Read())
             {
                 tempId = rdr.GetInt32(0);
                 tempName = rdr.GetString(1);
-                tempStylistId = rdr.GetInt32(2);
+                tempNumber = rdr.GetInt32(2).ToString();
+                tempStylistId = rdr.GetInt32(3);
             }
 
-            Client thisClient = new Client(tempName, tempStylistId);
+            Client thisClient = new Client(tempName, tempNumber, tempStylistId);
             conn.Close();
             if (conn != null)
             {
@@ -72,11 +81,13 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO clients (name, stylist_id) VALUES (@name, @stylist_id);";
+            cmd.CommandText = @"INSERT INTO clients (name, number, stylist_id) VALUES (@name, @number, @stylist_id);";
 
             MySqlParameter name = new MySqlParameter("@name", _name);
+            MySqlParameter number = new MySqlParameter("@number", _phonenumber);
             MySqlParameter stylist = new MySqlParameter("@stylist_id", _stylistId);
             cmd.Parameters.Add(name);
+            cmd.Parameters.Add(number);
             cmd.Parameters.Add(stylist);
 
             cmd.ExecuteNonQuery();

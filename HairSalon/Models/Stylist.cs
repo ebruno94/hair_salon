@@ -9,11 +9,13 @@ namespace HairSalon.Models
     {
         private string _name;
         private int _id;
+        private string _phonenumber;
         private List<Client> _clients;
 
-        public Stylist(string name)
+        public Stylist(string name, string number)
         {
             _name = name;
+            _phonenumber = number;
             _clients = new List<Client>();
         }
 
@@ -26,6 +28,12 @@ namespace HairSalon.Models
         {
             return _id;
         }
+
+        public string GetPhoneNumber()
+        {
+            return _phonenumber;
+        }
+
 
         public void SetId(int id)
         {
@@ -45,8 +53,9 @@ namespace HairSalon.Models
             {
                 int id = rdr.GetInt32(0);
                 string name = rdr.GetString(1);
-                int stylistId = rdr.GetInt32(2);
-                Client tempClient = new Client(name, stylistId);
+                string number = rdr.GetInt32(2).ToString();
+                int stylistId = rdr.GetInt32(3);
+                Client tempClient = new Client(name, number, stylistId);
                 tempClient.SetId(id);
                 clients.Add(tempClient);
             }
@@ -64,10 +73,12 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO stylists(name) VALUES (@name);";
+            cmd.CommandText = @"INSERT INTO stylists(name, number) VALUES (@name, @number);";
 
             MySqlParameter name = new MySqlParameter("@name", _name);
+            MySqlParameter number = new MySqlParameter("@number", _phonenumber);
             cmd.Parameters.Add(name);
+            cmd.Parameters.Add(number);
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
@@ -90,11 +101,13 @@ namespace HairSalon.Models
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
             string tempName = "";
             int tempId = 0;
+            string tempNumber = "";
 
             while (rdr.Read())
             {
                 tempId = rdr.GetInt32(0);
                 tempName = rdr.GetString(1);
+                tempNumber = rdr.GetInt32(2).ToString();
             }
             conn.Close();
             if (conn != null)
@@ -102,7 +115,7 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
 
-            Stylist thisStylist = new Stylist(tempName);
+            Stylist thisStylist = new Stylist(tempName, tempNumber);
             thisStylist.SetId(tempId);
             return thisStylist;
         }
@@ -121,7 +134,8 @@ namespace HairSalon.Models
             {
                 int id = rdr.GetInt32(0);
                 string name = rdr.GetString(1);
-                Stylist newStylist = new Stylist(name);
+                string number = rdr.GetInt32(2).ToString();
+                Stylist newStylist = new Stylist(name, number);
                 newStylist.SetId(id);
                 myStylists.Add(newStylist);
             }
