@@ -73,7 +73,7 @@ namespace HairSalon.Models
 
             MySqlParameter specialty = new MySqlParameter("@newSpecialty", newSpecialty);
             MySqlParameter id = new MySqlParameter("@id", _id);
-            cmd.Parameters.Add(name);
+            cmd.Parameters.Add(specialty);
             cmd.Parameters.Add(id);
             cmd.ExecuteNonQuery();
             conn.Dispose();
@@ -94,7 +94,7 @@ namespace HairSalon.Models
             while (rdr.Read())
             {
                 tempId = rdr.GetInt32(0);
-                tempName = rdr.GetSpecialty(1);
+                tempSpecialty = rdr.GetString(1);
             }
             conn.Close();
             if (conn != null)
@@ -102,14 +102,14 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
 
-            Specialty thisSpecialty = new Specialty(tempName);
+            Specialty thisSpecialty = new Specialty(tempSpecialty);
             thisSpecialty.SetId(tempId);
             return thisSpecialty;
         }
 
         public static List<Specialty> GetAll()
         {
-            List<Stylist> mySpecialties = new List<Specialty>();
+            List<Specialty> mySpecialties = new List<Specialty>();
 
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -121,8 +121,8 @@ namespace HairSalon.Models
             {
                 int id = rdr.GetInt32(0);
                 string specialty = rdr.GetString(1);
-                Stylist newStylist = new Stylist(specialty);
-                myStylists.Add(newStylist);
+                Specialty newSpecialty = new Specialty(specialty);
+                mySpecialties.Add(newSpecialty);
             }
 
             conn.Close();
@@ -161,7 +161,7 @@ namespace HairSalon.Models
                 stylistQuery.CommandText = @"SELECT * FROM stylists WHERE id = @StylistId;";
 
                 MySqlParameter stylistIdPara = new MySqlParameter("@StylistId", stylistId);
-                stylistQuery.Parameters.ADd(stylistIdPara);
+                stylistQuery.Parameters.Add(stylistIdPara);
 
                 var rdr2 = stylistQuery.ExecuteReader() as MySqlDataReader;
                 while (rdr2.Read())
@@ -212,7 +212,7 @@ namespace HairSalon.Models
 
         public override bool Equals(System.Object otherSpecialty)
         {
-            if (!(otherStylist is Specialty))
+            if (!(otherSpecialty is Specialty))
             {
                 return false;
             }
@@ -221,6 +221,11 @@ namespace HairSalon.Models
                 Specialty newSpecialty = (Specialty) otherSpecialty;
                 return (newSpecialty.GetSpecialty() == _specialty);
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetSpecialty().GetHashCode();
         }
 
     }

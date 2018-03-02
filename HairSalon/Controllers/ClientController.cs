@@ -15,7 +15,7 @@ namespace HairSalon.Controllers
             string number = Request.Form["clientNumber"];
             Client newClient = new Client(name, number);
             newClient.Save();
-            return RedirectToAction("Info", "Stylists", new {id = stylistId});
+            return RedirectToAction("Info", "Stylists");
         }
 
         [HttpGet("/Client/Info/{id}")]
@@ -30,7 +30,7 @@ namespace HairSalon.Controllers
         {
             Client myClient = Client.Find(id);
             myClient.Delete();
-            return RedirectToAction("Info", "Stylists", new {id = myClient.GetStylistId()});
+            return RedirectToAction("Info", "Stylists");
         }
     }
 }

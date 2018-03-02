@@ -102,7 +102,7 @@ namespace HairSalon.Models
             rdr.Dispose();
 
             List<Client> clients = new List<Client>{};
-            foreach (int clientId in ClientIds)
+            foreach (int clientId in clientIds)
             {
                 var clientQuery = conn.CreateCommand() as MySqlCommand;
                 clientQuery.CommandText = @"SELECT * FROM clients WHERE id = @ClientId;";
@@ -254,6 +254,10 @@ namespace HairSalon.Models
                 Stylist newStylist = (Stylist) otherStylist;
                 return (newStylist.GetName() == _name);
             }
+        }
+        public override int GetHashCode()
+        {
+            return this.GetName().GetHashCode();
         }
     }
 }
