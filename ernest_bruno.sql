@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 23, 2018 at 10:40 PM
+-- Generation Time: Mar 02, 2018 at 11:35 PM
 -- Server version: 5.6.34-log
 -- PHP Version: 7.1.5
 
@@ -33,21 +33,91 @@ USE `ernest_bruno`;
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `number` varchar(30) NOT NULL,
-  `stylist_id` int(11) NOT NULL
+  `number` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `name`, `number`, `stylist_id`) VALUES
-(11, 'Martha', '(333) 444 - 555', 14),
-(12, 'Alexa', '(444) 999 - 2333', 14),
-(13, 'Maggie', '(444) 123-2459', 14),
-(14, 'Keanna', '206 692-4240', 13),
-(15, 'Jules', '(888) 232 - 4423', 13),
-(16, 'Antonia', '(555) 255 - 9850', 13);
+INSERT INTO `clients` (`id`, `name`, `number`) VALUES
+(1, 'Keanna', '12312313123'),
+(3, 'Rowena', '554345345435'),
+(5, 'Eretria', '5656767534');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_stylist`
+--
+
+CREATE TABLE `client_stylist` (
+  `id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `stylist_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `client_stylist`
+--
+
+INSERT INTO `client_stylist` (`id`, `client_id`, `stylist_id`) VALUES
+(1, 19, 13),
+(5, 0, 1),
+(6, 2, 1),
+(7, 3, 1),
+(8, 4, 2),
+(9, 5, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `specialties`
+--
+
+CREATE TABLE `specialties` (
+  `id` int(11) NOT NULL,
+  `specialty` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `specialties`
+--
+
+INSERT INTO `specialties` (`id`, `specialty`) VALUES
+(1, 'Hair'),
+(2, 'Nail'),
+(3, 'Nail'),
+(4, 'Style'),
+(5, 'Massage');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `specialty_stylist`
+--
+
+CREATE TABLE `specialty_stylist` (
+  `id` int(11) NOT NULL,
+  `specialty_id` int(11) NOT NULL,
+  `stylist_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `specialty_stylist`
+--
+
+INSERT INTO `specialty_stylist` (`id`, `specialty_id`, `stylist_id`) VALUES
+(1, 1, 1),
+(2, 1, 1),
+(3, 2, 2),
+(4, 2, 2),
+(5, 3, 3),
+(6, 3, 3),
+(7, 4, 4),
+(8, 4, 4),
+(9, 5, 5),
+(10, 5, 5);
 
 -- --------------------------------------------------------
 
@@ -66,8 +136,11 @@ CREATE TABLE `stylists` (
 --
 
 INSERT INTO `stylists` (`id`, `name`, `number`) VALUES
-(13, 'Ernest Bruno', '425 773 3981'),
-(14, 'Poop', '2312333');
+(1, 'Ernest Bruno', '425 773 3981'),
+(2, 'Georgia', '534534583'),
+(3, 'Pipune', '(425) 733-3981'),
+(4, 'Ivana', '1838742834'),
+(5, 'Tomiko', '1235565656');
 
 --
 -- Indexes for dumped tables
@@ -77,6 +150,24 @@ INSERT INTO `stylists` (`id`, `name`, `number`) VALUES
 -- Indexes for table `clients`
 --
 ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `client_stylist`
+--
+ALTER TABLE `client_stylist`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `specialties`
+--
+ALTER TABLE `specialties`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `specialty_stylist`
+--
+ALTER TABLE `specialty_stylist`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -93,12 +184,27 @@ ALTER TABLE `stylists`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `client_stylist`
+--
+ALTER TABLE `client_stylist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `specialties`
+--
+ALTER TABLE `specialties`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `specialty_stylist`
+--
+ALTER TABLE `specialty_stylist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `stylists`
 --
 ALTER TABLE `stylists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
