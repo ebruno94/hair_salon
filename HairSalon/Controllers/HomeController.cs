@@ -14,13 +14,15 @@ namespace HairSalon.Controllers
             return View(Stylist.GetAllStylists());
         }
 
-        [HttpGet("/Stylist/Delete_All")]
+        [HttpGet("/Delete_All")]
         public ActionResult DeleteAll()
         {
             Stylist.DeleteAll();
             Client.DeleteAll();
+            Specialty.DeleteAll();
 
             return RedirectToAction("Index", "Home");
         }
+
     }
 }

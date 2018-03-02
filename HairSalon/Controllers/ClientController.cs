@@ -8,6 +8,12 @@ namespace HairSalon.Controllers
 {
     public class ClientsController : Controller
     {
+        [HttpGet("/Clients/ViewAll")]
+        public ActionResult ViewAll()
+        {
+            return View(Client.GetAll());
+        }
+
         [HttpPost("/Client/Create/{id}")]
         public ActionResult Create(int id)
         {

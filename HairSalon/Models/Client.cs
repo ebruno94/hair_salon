@@ -69,6 +69,32 @@ namespace HairSalon.Models
             return thisClient;
         }
 
+        public string GetStylist()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT stylists.* FROM clients JOIN client_stylist ON (clients.id = client_stylist.client_id) JOIN stylists ON (client_stylist.stylist_id = stylists.id) WHERE clients.id = @ClientId;";
+
+            MySqlParameter clientId = new MySqlParameter("@ClientId", _id);
+            cmd.Parameters.Add(clientId);
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int id = 0;
+            string stylistName = "";
+            string stylistNumber = "";
+            while (rdr.Read())
+            {
+                id = rdr.GetInt32(0);
+                stylistName = rdr.GetString(1);
+                stylistNumber = rdr.GetString(2);
+            }
+            conn.Dispose();
+            Stylist myStylist = new Stylist(stylistName,stylistNumber);
+            myStylist.SetId(id);
+            return myStylist.GetName();
+        }
+
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
@@ -96,7 +122,7 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM clients;";
+            cmd.CommandText = @"DELETE FROM clients; DELETE FROM client_stylist";
             cmd.ExecuteNonQuery();
 
             conn.Close();
