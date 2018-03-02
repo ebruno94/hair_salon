@@ -15,9 +15,9 @@ namespace HairSalon.Controllers
             string name = Request.Form["clientName"];
             string number = Request.Form["clientNumber"];
             Client newClient = new Client(name, number);
+            newClient.Save();
             Stylist thisStylist = Stylist.Find(id);
             thisStylist.AddClient(newClient);
-            newClient.Save();
             return RedirectToAction("Info", "Stylists", new {id = id});
         }
 
@@ -37,7 +37,7 @@ namespace HairSalon.Controllers
             ViewBag.ClientId = clientId;
             Client myClient = Client.Find(clientId);
             myClient.Delete();
-            return RedirectToAction("Info", "Stylists");
+            return RedirectToAction("Info", "Stylists", new {id = stylistId});
         }
     }
 }

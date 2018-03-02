@@ -40,6 +40,7 @@
       else
       {
           <h3>Clients</h3>
+          <hr>
             @foreach (var client in Model.GetAllClients())
             {
             <div class="row">
@@ -49,7 +50,8 @@
                 <div class="col-md-5">
                   <a href="/Client/Delete/@ViewBag.StylistId/@client.GetId()"><button type="button" class="btn"> Remove </button></a>
                 </div>
-              </div>
+            </div>
+            <hr>
             }
             <hr>
             <h2>ADD ANOTHER CLIENT FOR THIS STYLIST</h2>
