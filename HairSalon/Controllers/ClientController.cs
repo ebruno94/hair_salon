@@ -13,8 +13,7 @@ namespace HairSalon.Controllers
         {
             string name = Request.Form["clientName"];
             string number = Request.Form["clientNumber"];
-            int stylistId = Int32.Parse(Request.Form["stylistId"]);
-            Client newClient = new Client(name, number, stylistId);
+            Client newClient = new Client(name, number);
             newClient.Save();
             return RedirectToAction("Info", "Stylists", new {id = stylistId});
         }

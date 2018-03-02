@@ -10,13 +10,11 @@ namespace HairSalon.Models
         private string _name;
         private int _id;
         private string _phonenumber;
-        private List<Client> _clients = new List<Client>();
 
         public Stylist(string name, string number)
         {
             _name = name;
             _phonenumber = number;
-            _clients = new List<Client>();
         }
 
         public string GetName()
@@ -40,27 +38,59 @@ namespace HairSalon.Models
             _id = id;
         }
 
+        public void AddClient(Client newClient)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO client_stylist (client_id, stylist_id) VALUES (@ClientId, @StylistId);";
+            MySqlParameter client_id = new MySqlParameter("@ClientId", newClient.GetId());
+            MySqlParameter stylist_id = new MySqlParameter("@StylistId", _id);
+            cmd.Parameters.Add(client_id);
+            cmd.Parameters.Add(stylist_id);
+            cmd.ExecuteNonQuery();
+            conn.Dispose();
+        }
+
         public List<Client> GetAllClients()
         {
-            List<Client> clients = new List<Client>();
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM clients WHERE stylist_id=@stylist_id;";
+            cmd.CommandText = @"SELECT client_id FROM client_stylist WHERE stylist_id = @stylist_id;";
 
             MySqlParameter tempSID = new MySqlParameter("@stylist_id", _id);
             cmd.Parameters.Add(tempSID);
 
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<int> clientIds = new List<int>();
+
             while (rdr.Read())
             {
-                int id = rdr.GetInt32(0);
-                string name = rdr.GetString(1);
-                string number = rdr.GetString(2);
-                int stylistId = rdr.GetInt32(3);
-                Client tempClient = new Client(name, number, stylistId);
-                tempClient.SetId(id);
-                clients.Add(tempClient);
+                int clientId = rdr.GetInt32(1);
+                clientIds.Add(clientId);
+            }
+            rdr.Dispose();
+
+            List<Client> clients = new List<Client>{};
+            foreach (int clientId in ClientIds)
+            {
+                var clientQuery = conn.CreateCommand() as MySqlCommand;
+                clientQuery.CommandText = @"SELECT * FROM clients WHERE id = @ClientId;";
+
+                MySqlParameter clientIdParameter = new MySqlParameter("@ClientId", clientId);
+                clientQuery.Parameters.Add(clientIdParameter);
+
+                var rdr2 = clientQuery.ExecuteReader() as MySqlDataReader;
+                while (rdr2.Read())
+                {
+                    int thisClientId = rdr2.GetInt32(0);
+                    string clientName = rdr2.GetString(1);
+                    string number = rdr2.GetString(2);
+                    Client newClient = new Client(clientName, number);
+                    clients.Add(newClient);
+                }
+                rdr2.Dispose();
             }
 
             conn.Close();

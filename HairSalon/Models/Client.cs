@@ -10,13 +10,11 @@ namespace HairSalon.Models
         private string _name;
         private int _id;
         private string _phonenumber;
-        private int _stylistId;
 
-        public Client(string name, string number, int stylistId)
+        public Client(string name, string number)
         {
             _name = name;
             _phonenumber = number;
-            _stylistId = stylistId;
         }
 
         public string GetName()
@@ -39,11 +37,6 @@ namespace HairSalon.Models
             _id = id;
         }
 
-        public int GetStylistId()
-        {
-            return _stylistId;
-        }
-
         public static Client Find(int id)
         {
             MySqlConnection conn = DB.Connection();
@@ -56,17 +49,15 @@ namespace HairSalon.Models
             int tempId =0;
             string tempName = "";
             string tempNumber = "";
-            int tempStylistId = 0;
 
             while (rdr.Read())
             {
                 tempId = rdr.GetInt32(0);
                 tempName = rdr.GetString(1);
                 tempNumber = rdr.GetString(2);
-                tempStylistId = rdr.GetInt32(3);
             }
 
-            Client thisClient = new Client(tempName, tempNumber, tempStylistId);
+            Client thisClient = new Client(tempName, tempNumber);
             thisClient.SetId(tempId);
 
             conn.Close();
@@ -83,14 +74,12 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO clients (name, number, stylist_id) VALUES (@name, @number, @stylist_id);";
+            cmd.CommandText = @"INSERT INTO clients (name, number) VALUES (@name, @number);";
 
             MySqlParameter name = new MySqlParameter("@name", _name);
             MySqlParameter number = new MySqlParameter("@number", _phonenumber);
-            MySqlParameter stylist = new MySqlParameter("@stylist_id", _stylistId);
             cmd.Parameters.Add(name);
             cmd.Parameters.Add(number);
-            cmd.Parameters.Add(stylist);
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
@@ -134,6 +123,41 @@ namespace HairSalon.Models
             }
         }
 
+        public static List<Client> GetAll()
+        {
+            List<Client> allClients = new List<Client>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM clients;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while (rdr.Read())
+            {
+                int clientId = rdr.GetInt32(0);
+                string clientName = rdr.GetString(1);
+                string clientNumber = rdr.GetString(2);
+                Client newClient = new Client(clientName, clientNumber);
+                allClients.Add(newClient);
+            }
+            conn.Dispose();
+            return allClients;
+        }
+
+        public void UpdateName(string newName)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE clients SET name = @newName WHERE id = @id;";
+
+            MySqlParameter name = new MySqlParameter("@newName", newName);
+            MySqlParameter id = new MySqlParameter("@id", _id);
+            cmd.Parameters.Add(name);
+            cmd.Parameters.Add(id);
+            cmd.ExecuteNonQuery();
+            conn.Dispose();
+        }
+
         public override bool Equals(System.Object otherClient)
         {
             if (!(otherClient is Client))
@@ -145,6 +169,11 @@ namespace HairSalon.Models
                 Client newClient = (Client) otherClient;
                 return (newClient.GetName() == _name);
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetName().GetHashCode();
         }
     }
 }
