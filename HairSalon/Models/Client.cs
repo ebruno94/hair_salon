@@ -143,6 +143,7 @@ namespace HairSalon.Models
             return allClients;
         }
 
+
         public void UpdateInfo(string newName, string newNum)
         {
             MySqlConnection conn = DB.Connection();

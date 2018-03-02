@@ -81,12 +81,37 @@ namespace HairSalon.Models
             conn.Dispose();
         }
 
+        public string GetSpecialty()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT specialties.* FROM specialty_stylist JOIN stylists ON (stylists.id = specialty_stylist.stylist_id) JOIN specialties ON (specialties.id = specialty_stylist.specialty_id) WHERE stylists.id = @StylistId;";
+
+            MySqlParameter stylistId = new MySqlParameter("@StylistId", _id);
+            cmd.Parameters.Add(stylistId);
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int id = 0;
+            string specialty = "";
+            while (rdr.Read())
+            {
+                id = rdr.GetInt32(0);
+                specialty = rdr.GetString(1);
+            }
+            Specialty mySpecialty = new Specialty(specialty);
+            mySpecialty.SetId(id);
+            conn.Dispose();
+            return mySpecialty.GetSpecialty();
+
+        }
+
         public List<Client> GetAllClients()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT client_id FROM client_stylist WHERE stylist_id = @stylist_id;";
+            cmd.CommandText = @"SELECT * FROM client_stylist WHERE stylist_id = @stylist_id;";
 
             MySqlParameter tempSID = new MySqlParameter("@stylist_id", _id);
             cmd.Parameters.Add(tempSID);
@@ -117,7 +142,9 @@ namespace HairSalon.Models
                     string clientName = rdr2.GetString(1);
                     string number = rdr2.GetString(2);
                     Client newClient = new Client(clientName, number);
+                    newClient.SetId(thisClientId);
                     clients.Add(newClient);
+
                 }
                 rdr2.Dispose();
             }

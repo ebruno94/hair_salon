@@ -19,14 +19,21 @@ namespace HairSalon.Controllers
         {
             string name = Request.Form["stylistName"];
             string number = Request.Form["stylistNumber"];
+            string specialty = Request.Form["stylistSpecial"];
             Stylist myStylist = new Stylist(name, number);
             myStylist.Save();
+            Console.WriteLine(myStylist.GetId());
+            Specialty newSpecialty = new Specialty(specialty);
+            newSpecialty.Save();
+            newSpecialty.AddStylist(myStylist);
+            myStylist.AddSpecialty(newSpecialty);
             return View("Info", myStylist);
         }
 
-        [HttpGet("/Stylist/Info/{id}")]
+        [HttpGet("Stylist/Info/{id}")]
         public ActionResult Info(int id)
         {
+            ViewBag.StylistId = id;
             return View(Stylist.Find(id));
         }
 

@@ -7,6 +7,7 @@
     <div class="col-md-12">
       <h1>@Model.GetName()</h1>
       <hr>
+      <h2>Specialty: @Model.GetSpecialty()</h2>
       <h2>Phone Number: @Model.GetPhoneNumber()</h2>
       <br>
       @if (Model.GetAllClients().Count == 0)
@@ -18,7 +19,7 @@
               <div class="col-md-12">
                 <h2>ADD A CLIENT FOR THIS STYLIST</h2>
                 <hr>
-                <form action="/Client/Create" method="post">
+                <form action="/Client/Create/@Model.GetId()" method="post">
                   <div class="flex">
                     <div class="form-group inline-block">
                       <label for="clientName">Name: </label>
@@ -29,7 +30,6 @@
                       <input type="text" name="clientNumber">
                     </div>
                   </div>
-                  <input type="hidden" name="stylistId" value="@Model.GetId()">
                   <button type="submit" class="btn">Submit</button>
                 </form>
                 <hr>
@@ -44,17 +44,17 @@
             {
             <div class="row">
                 <div class="col-md-7">
-                  <a href="/Client/Info/@client.GetId()"><h4>@client.GetName()</h4></a>
+                  <a href="/Client/Info/@ViewBag.StylistId/@client.GetId()"><h4>@client.GetName()</h4></a>
                 </div>
                 <div class="col-md-5">
-                  <a href="/Client/Delete/@client.GetStylistId()"><button type="button" class="btn"> Remove </button></a>
+                  <a href="/Client/Delete/@ViewBag.StylistId/@client.GetId()"><button type="button" class="btn"> Remove </button></a>
                 </div>
               </div>
             }
             <hr>
             <h2>ADD ANOTHER CLIENT FOR THIS STYLIST</h2>
             <hr>
-            <form action="/Client/Create" method="post">
+            <form action="/Client/Create/@Model.GetId()" method="post">
               <div class="flex">
                 <div class="form-group inline-block">
                   <label for="clientName">Name: </label>
@@ -65,7 +65,6 @@
                   <input type="text" name="clientNumber">
                 </div>
               </div>
-              <input type="hidden" name="stylistId" value="@Model.GetId()">
               <button type="submit" class="btn">Submit</button>
             </form>
             <hr>

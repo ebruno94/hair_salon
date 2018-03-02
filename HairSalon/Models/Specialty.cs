@@ -59,7 +59,7 @@ namespace HairSalon.Models
             MySqlParameter stylist_id = new MySqlParameter("@StylistId", newStylist.GetId());
             MySqlParameter specialty_id = new MySqlParameter("@SpecialtyId", _id);
             cmd.Parameters.Add(stylist_id);
-            cmd.Parameters.Add(stylist_id);
+            cmd.Parameters.Add(specialty_id);
             cmd.ExecuteNonQuery();
             conn.Dispose();
         }
