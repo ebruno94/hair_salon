@@ -38,6 +38,21 @@ namespace HairSalon.Models
             _id = id;
         }
 
+        public void UpdateName(string newName)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE stylists SET name = @newName WHERE id = @id;";
+
+            MySqlParameter name = new MySqlParameter("@newName", newName);
+            MySqlParameter id = new MySqlParameter("@id", _id);
+            cmd.Parameters.Add(name);
+            cmd.Parameters.Add(id);
+            cmd.ExecuteNonQuery();
+            conn.Dispose();
+        }
+
         public void AddClient(Client newClient)
         {
             MySqlConnection conn = DB.Connection();
@@ -47,6 +62,20 @@ namespace HairSalon.Models
             MySqlParameter client_id = new MySqlParameter("@ClientId", newClient.GetId());
             MySqlParameter stylist_id = new MySqlParameter("@StylistId", _id);
             cmd.Parameters.Add(client_id);
+            cmd.Parameters.Add(stylist_id);
+            cmd.ExecuteNonQuery();
+            conn.Dispose();
+        }
+
+        public void AddSpecialty(Specialty newSpecialty)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO specialty_stylist (specialty_id, stylist_id) VALUES (@SpecialtyId, @StylistId);";
+            MySqlParameter specialty_id = new MySqlParameter("@SpecialtyId", newSpecialty.GetId());
+            MySqlParameter stylist_id = new MySqlParameter("@StylistId", _id);
+            cmd.Parameters.Add(specialty_id);
             cmd.Parameters.Add(stylist_id);
             cmd.ExecuteNonQuery();
             conn.Dispose();
