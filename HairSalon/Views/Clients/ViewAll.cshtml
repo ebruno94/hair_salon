@@ -25,13 +25,13 @@
             {
                 <div class="row">
                     <div class="col-md-4">
-                        <h3>@client.GetName()</h3>
+                          <a href="/Client/Info/@client.GetAssignedStylist().GetId()/@client.GetId()"><h4>@client.GetName()</h4></a>
                     </div>
                     <div class="col-md-4">
                         <h3>@client.GetPhoneNumber()</h3>
                     </div>
                     <div class="col-md-4">
-                        <h3>@client.GetAssignedStylist()</h3>
+                        <h3>@client.GetAssignedStylist().GetName()</h3>
                     </div>
                 </div>
             }

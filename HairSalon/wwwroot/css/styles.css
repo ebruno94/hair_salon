@@ -14,3 +14,9 @@ footer {
 body{
     padding-bottom: 50px;
 }
+
+
+.jumbotron{
+    text-align: center;
+    box-shadow: 0 0 15 black;
+}

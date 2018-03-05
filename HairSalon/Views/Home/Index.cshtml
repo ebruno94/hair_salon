@@ -10,12 +10,10 @@
         <div class="col-md-12">
             <h1>STYLISTS</h1>
             <hr>
-            <ul>
-                @foreach (var stylist in Model)
-                {
-                    <a href="/Stylist/Info/@stylist.GetId()"><li>@stylist.GetName()</li></a>
-                }
-            </ul>
+            @foreach (var stylist in Model)
+            {
+                <a href="/Stylist/Info/@stylist.GetId()"><h3>@stylist.GetName()</h3></a>
+            }
         </div>
     </div>
 </div>

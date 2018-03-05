@@ -135,7 +135,7 @@ namespace HairSalon.Models
             return mySpecialties;
         }
 
-        public string GetStylist()
+        public Stylist GetStylist()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -158,7 +158,7 @@ namespace HairSalon.Models
             conn.Dispose();
             Stylist myStylist = new Stylist(stylistName, stylistNumber);
             myStylist.SetId(id);
-            return myStylist.GetName();
+            return myStylist;
         }
         // public List<Stylist> GetStylists()
         // {
