@@ -46,7 +46,7 @@ namespace HairSalon.Models
             cmd.Parameters.Add(new MySqlParameter("@id", id));
 
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int tempId =0;
+            int tempId = 0;
             string tempName = "";
             string tempNumber = "";
 
@@ -69,7 +69,7 @@ namespace HairSalon.Models
             return thisClient;
         }
 
-        public string GetStylist()
+        public string GetAssignedStylist()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -90,7 +90,7 @@ namespace HairSalon.Models
                 stylistNumber = rdr.GetString(2);
             }
             conn.Dispose();
-            Stylist myStylist = new Stylist(stylistName,stylistNumber);
+            Stylist myStylist = new Stylist(stylistName, stylistNumber);
             myStylist.SetId(id);
             return myStylist.GetName();
         }
@@ -163,6 +163,7 @@ namespace HairSalon.Models
                 string clientName = rdr.GetString(1);
                 string clientNumber = rdr.GetString(2);
                 Client newClient = new Client(clientName, clientNumber);
+                newClient.SetId(clientId);
                 allClients.Add(newClient);
             }
             conn.Dispose();

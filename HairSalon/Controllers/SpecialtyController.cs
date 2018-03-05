@@ -11,7 +11,8 @@ namespace HairSalon.Controllers
         [HttpGet("/Specialties/ViewAll")]
         public ActionResult ViewAll()
         {
-            return View(Specialty.GetAll());
+            List<Specialty> specialties = Specialty.GetAll();
+            return View(specialties);
         }
     }
 }

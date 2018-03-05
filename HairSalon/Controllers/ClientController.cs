@@ -11,7 +11,8 @@ namespace HairSalon.Controllers
         [HttpGet("/Clients/ViewAll")]
         public ActionResult ViewAll()
         {
-            return View(Client.GetAll());
+            List<Client> clients = Client.GetAll();
+            return View(clients);
         }
 
         [HttpPost("/Client/Create/{id}")]
