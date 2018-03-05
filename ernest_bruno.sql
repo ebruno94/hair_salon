@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 02, 2018 at 11:35 PM
+-- Generation Time: Mar 05, 2018 at 03:47 AM
 -- Server version: 5.6.34-log
 -- PHP Version: 7.1.5
 
@@ -41,9 +41,18 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`id`, `name`, `number`) VALUES
-(1, 'Keanna', '12312313123'),
 (3, 'Rowena', '554345345435'),
-(5, 'Eretria', '5656767534');
+(5, 'Eretria', '5656767534'),
+(6, 'Alma', '1231234545'),
+(7, 'Amberle', '1266767564'),
+(8, 'Ingrid', '124554566544'),
+(9, 'Indiana', '545443322'),
+(10, 'Keanna', '34323231232'),
+(11, 'Jeffrey', '543443232'),
+(12, 'Blake', '43435434'),
+(13, 'Julius', '453443432223'),
+(14, 'Kim', '4545342234'),
+(15, 'Omega', '12435423456');
 
 -- --------------------------------------------------------
 
@@ -63,11 +72,20 @@ CREATE TABLE `client_stylist` (
 
 INSERT INTO `client_stylist` (`id`, `client_id`, `stylist_id`) VALUES
 (1, 19, 13),
-(5, 0, 1),
 (6, 2, 1),
 (7, 3, 1),
 (8, 4, 2),
-(9, 5, 2);
+(9, 5, 2),
+(10, 6, 5),
+(11, 7, 3),
+(12, 8, 5),
+(13, 9, 1),
+(14, 10, 1),
+(15, 11, 1),
+(16, 12, 2),
+(17, 13, 3),
+(18, 14, 3),
+(19, 15, 4);
 
 -- --------------------------------------------------------
 
@@ -184,12 +202,12 @@ ALTER TABLE `stylists`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `client_stylist`
 --
 ALTER TABLE `client_stylist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `specialties`
 --
